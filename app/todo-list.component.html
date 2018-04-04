@@ -1,0 +1,31 @@
+<!-- This is the template for the todos app -->
+<div class="navbar navbar-inverse bg-inverse">
+    <h1 class="text-xs-center">ToDos List</h1>
+</div>
+
+    <div class="controls">
+        <button type="button" class="btn btn-danger btn-lg btn-block"><span (click)="makeAChange(i); addNewTodo()" class="new-todo">Add new Todo <strong>+</strong></span></button>
+
+    </div>
+    <ul class="list-group form-inline">
+        <li *ngFor="#todo of todos | sort; #i=index" class="list-group-item " [class.completed]="todo.completed">
+           <input [(ngModel)]="todo.completed" (click)="makeAChange(i); saveTodos()" type="checkbox" />
+           <label [hidden]="todo.editing" (click)="todo.editing = true" class="todo-title" data-toggle="tooltip" data-placement="right" title="Edit the task">{{todo.name}} </label>
+           <input type="text" [hidden]="!todo.editing" [(ngModel)]="todo.name" (blur)="todo.editing = false" />
+            <button (click)="makeAChange(i); deleteTodo(i)" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+           </button>
+        </li>
+    </ul>
+
+    <div *ngIf="edited==true" class="alert alert-success alert-dismissible fade in" role="alert">
+        <button (click)="edited = !edited" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="alert alert-success" role="alert">
+            <strong>List Saved!</strong> Changes has been saved.
+            <button type="button" class="btn btn-success">
+                Changes:  <span class="badge badge-light">{{changes}}</span>
+            </button>
+        </div>
+    </div>
